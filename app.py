@@ -65,13 +65,11 @@ def register():
 
     email = email.strip()
 
-    # Email validation
     email_pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
 
     if not re.fullmatch(email_pattern, email):
         return jsonify({"error": "Invalid email format"}), 400
 
-    # Password validation
     password_pattern = r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$'
 
     if not re.fullmatch(password_pattern, password):
@@ -79,7 +77,6 @@ def register():
             "error": "Password must be at least 8 characters and contain uppercase, lowercase, digit and special character"
         }), 400
 
-    # Check existing user
     if User.query.filter_by(email=email).first():
         return jsonify({"error": "User already exists"}), 409
 
@@ -198,7 +195,7 @@ def get_product(product_id):
     }), 200
 
 
-# Update Product API (PATCH)
+# Update Product API
 
 @app.route("/product/<int:product_id>", methods=["PATCH"])
 def update_product(product_id):
